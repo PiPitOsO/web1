@@ -109,15 +109,6 @@ public class Request {
         final var headerss = Arrays.asList(new String(headersBytes).split("\r\n"));
         System.out.println(headerss);
 
-//        final var parts = requestLine.split(" ");
-//
-//        if (parts.length != 3) {
-//            throw new IOException("Server.request.Request is invalid");
-//        }
-
-//        var method = parts[0];
-//        var path = parts[1];
-
         Map<String, String> headers = new HashMap<>();
         String headerLine;
         while (!(headerLine = reader.readLine()).equals("")) {
