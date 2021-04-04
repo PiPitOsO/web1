@@ -52,11 +52,11 @@ public class Request {
         out.flush();
     }
 
-    private static int indexOf(byte[] array, byte[] target, int start, int max) {
+    private static int indexOf(String[] array, String[] target, int start, int max) {
         outer:
         for (int i = start; i < max - target.length + 1; i++) {
             for (int j = 0; j < target.length; j++) {
-                if (array[i + j] != target[j]) {
+                if (!array[i + j].equals(target[j])) {
                     continue outer;
                 }
             }
@@ -71,10 +71,10 @@ public class Request {
         final var limit = 4096;
 
         in.mark(limit);
-        final var buffer = new byte[limit];
+        final var buffer = limit;
         final var read = in.read(buffer);
 
-        final var requestLineDelimiter = new byte[]{'\r', '\n'};
+        final var requestLineDelimiter = new String[]{"\r", "\n"};
         final var requestLineEnd = indexOf(buffer, requestLineDelimiter, 0, read);
         if (requestLineEnd == -1) {
             badRequest(out);
@@ -95,7 +95,7 @@ public class Request {
             badRequest(out);
         }
 
-        final var headersDelimiter = new byte[]{'\r', '\n', '\r', '\n'};
+        final var headersDelimiter = new String[]{"\r", "\n", "\r", "\n"};
         final var headersStart = requestLineEnd + requestLineDelimiter.length;
         final var headersEnd = indexOf(buffer, headersDelimiter, headersStart, read);
         if (headersEnd == -1) {
